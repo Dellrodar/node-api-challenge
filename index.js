@@ -1,3 +1,17 @@
+const express = require('express');
+const server = express();
+const projectsRouter = require('./projects');
+
+server.use(express.json());
+server.use('/projects', projectsRouter);
+const port = process.env.PORT || 6000;
+
+server.listen(port, () => {
+	console.log(`Server running at http://localhost:${port}`)
+});
+
+module.exports = server;
+
 /*
 play this: https://www.youtube.com/watch?v=d-diB65scQU
 
