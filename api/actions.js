@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const actionsDb = require('./data/helpers/actionModel');
+const actionsDb = require('../data/helpers/actionModel');
 
 // GET
 router.get('/', async (req, res, next) => {
