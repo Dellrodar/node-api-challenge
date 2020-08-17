@@ -1,3 +1,23 @@
+const express = require('express');
+const server = express();
+const projectsRouter = require('./api/projects');
+const actionRouter = require('./api/actions');
+
+server.use(express.json());
+server.use('/projects', projectsRouter);
+server.use('/actions', actionRouter);
+const port = process.env.PORT || 4000;
+
+server.get('/', (req, res) => {
+  res.send(`<h2>Emilio's Web API sprint!</h2>`);
+});
+
+server.listen(port, () => {
+	console.log(`Server running at http://localhost:${port}`)
+});
+
+module.exports = server;
+
 /*
 play this: https://www.youtube.com/watch?v=d-diB65scQU
 
