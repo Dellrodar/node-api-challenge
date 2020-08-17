@@ -1,9 +1,11 @@
 const express = require('express');
 const server = express();
 const projectsRouter = require('./projects');
+const actionRouter = require('./actions');
 
 server.use(express.json());
 server.use('/projects', projectsRouter);
+server.use('/actions', actionRouter);
 const port = process.env.PORT || 6000;
 
 server.listen(port, () => {

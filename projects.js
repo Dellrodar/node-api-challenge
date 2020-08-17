@@ -13,10 +13,20 @@ router.get('/', async (req, res, next) => {
   }
 });
 
-router.get('/:id', async (req, res, next) => {
+router.get('/:id', validateProjectId, async (req, res, next) => {
   try {
     const project = await projectDb.get(req.params.id);
     res.status(200).json(project);
+  } catch (err) {
+    return next(err);
+  }
+});
+
+// GET Project Actions
+router.get('/:id', validateProjectId, async (req, res, next) => {
+  try {
+    const projectActions = await projectDb.getProjectActions(req.params.id);
+    res.status(200).json(projectActions);
   } catch (err) {
     return next(err);
   }
