@@ -6,7 +6,11 @@ const actionRouter = require('./actions');
 server.use(express.json());
 server.use('/projects', projectsRouter);
 server.use('/actions', actionRouter);
-const port = process.env.PORT || 6000;
+const port = process.env.PORT || 4000;
+
+server.get('/', (req, res) => {
+  res.send(`<h2>Emilio's Web API sprint!</h2>`);
+});
 
 server.listen(port, () => {
 	console.log(`Server running at http://localhost:${port}`)

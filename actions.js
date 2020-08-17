@@ -66,7 +66,7 @@ function validateAction(req, res, next) {
 
 function validateActionId(req, res, next) {
   actionsDb.get(req.params.id)
-  .then((action) =>{
+  .then(action =>{
     if (action) {
       req.action = action;
       next();
@@ -75,7 +75,7 @@ function validateActionId(req, res, next) {
   })
   .catch(err => {
     console.log(err);
-    res.status(500).json({message: "Oops, something went wrong!"});
+    return res.status(500).json({message: "Oops, something went wrong!"});
   });
 }
 

@@ -23,7 +23,7 @@ router.get('/:id', validateProjectId, async (req, res, next) => {
 });
 
 // GET Project Actions
-router.get('/:id', validateProjectId, async (req, res, next) => {
+router.get('/:id/actions', validateProjectId, async (req, res, next) => {
   try {
     const projectActions = await projectDb.getProjectActions(req.params.id);
     res.status(200).json(projectActions);
@@ -43,7 +43,7 @@ router.post('/', validateProject, async (req, res, next) => {
 })
 
 //PUT
-router.put('/:id', validateProjectId, async (req, res, next) => {
+router.put('/:id', validateProjectId, validateProject, async (req, res, next) => {
   try {
     const project = await projectDb.update(req.params.id, req.body);
     res.status(201).json({message: "Project has been updated!", project });
@@ -53,7 +53,7 @@ router.put('/:id', validateProjectId, async (req, res, next) => {
 });
 
 //DELETE
-router.delete('/:id', validateProject, async (req, res, next) => {
+router.delete('/:id', validateProjectId, async (req, res, next) => {
   try {
     const deletedProject = await projectDb.get(req.params.id);
     const expulsion = await projectDb.delete(req.params.id);
@@ -73,18 +73,16 @@ function validateProject(req, res, next) {
 
 function validateProjectId(req, res, next) {
   projectDb.get(req.params.id)
-    .then((project) => {
-      if (project) {
+    .then(project => {
+      if(project) {
         req.project = project;
         next();
       }
-      return res.status(400).json({ message: 'Invalid project id' });
+      return res.status(400).json({ message: "Invalid project ID" });
     })
-    .catch((error) => {
-			console.log(error);
-			return res.status(500).json({
-				error: 'There was a problem pulling the data from the server',
-      })
+    .catch(err => {
+      console.log(err);
+      res.status(500).json({ message: "Error retrieving project data" });
     });
 }
 
